@@ -40,16 +40,13 @@ def main():
     top_countries = df['winner-country'].value_counts().head(10)
 
     # Gráfica "Países Campeones UEFA Champions League":
-    # Elegir estilo y paleta de colores Seaborn:
-    sns.set(style="whitegrid")                                                      
-    colors = sns.color_palette("viridis", len(top_countries))                           
-    fig, ax = plt.subplots(figsize=(10, 6))                                         
-    # Crear gráfico de pastel
+    # Generar gráfico de pastel y configuración de etiquetas:
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.pie(top_countries, labels=top_countries.index, autopct='%1.1f%%', colors=colors, startangle=90, wedgeprops={'edgecolor': 'black'})
-    # Título del gráfico
+    labels = [f'{country} {pct:.1f}% ({count})' for country, pct, count in zip(top_countries.index, top_countries.values / top_countries.sum() * 100, top_countries.values)]
+    ax.pie(top_countries, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90, wedgeprops={'edgecolor': 'black'}, pctdistance=0.85)
+    # Título del gráfico:
     ax.set_title('Países Campeones UEFA Champions League', fontsize=16, fontweight='bold')
-    # Mostrar el gráfico en Streamlit
+    # Mostrar el gráfico en Streamlit:
     st.pyplot(fig)
 
 main()
