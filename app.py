@@ -14,8 +14,8 @@ def main():
 
     # Encabezado de la App:
     st.title('UEFA Champions League')
-    st.header('Histórico de finales Champions League')
-    st.subheader('Temporadas: de 1955 a 2023')
+    st.header('Estadísticas finales Champions League')
+    st.subheader('Tabla de resumen: temporada 1955 a 2023')
 
     # Mostrar el dataframe en Streamlit:
     st.dataframe(df)
@@ -25,12 +25,12 @@ def main():
 
     # Gráfica "Clubes Campeones UEFA Champions League":
     # Elegir estilo y paleta de colores Seaborn:
+    st.subheader('Top 10: clubes campeones UEFA Champions League')
     sns.set(style="whitegrid")                                                      
     colors = sns.color_palette("viridis", len(top_teams))                           
     fig, ax = plt.subplots(figsize=(10, 6))                                         
     # Crear gráfico de barras:
     top_teams.plot(kind='bar', ax=ax, color=colors)
-    ax.set_title('Clubes Campeones UEFA Champions League', fontsize=16, fontweight='bold')
     # Configuración de titulos y etiquetas:
     ax.set_xlabel('Equipo', fontsize=12)
     ax.set_ylabel('Copas', fontsize=12)
@@ -44,6 +44,7 @@ def main():
 
     # Gráfica "Países Campeones UEFA Champions League":
     # Elegir estilo y paleta de colores Seaborn:
+    st.subheader('Top 5: países campeones UEFA Champions League')
     sns.set(style="whitegrid")
     colors = sns.color_palette("viridis", len(top_countries))
     # Crear gráfico de pastel:
@@ -64,8 +65,6 @@ def main():
         pctdistance=0.85,  # Distancia del porcentaje (se reduce para mejor estética)
         labeldistance=1.1  # Aleja las etiquetas del centro del gráfico
     )
-    # Título del gráfico
-    ax.set_title('Países Campeones UEFA Champions League', fontsize=16, fontweight='bold')
     # Mostrar el gráfico en Streamlit
     st.pyplot(fig)
 
