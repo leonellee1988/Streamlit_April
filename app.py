@@ -93,7 +93,7 @@ def create_ring_chart(df):
         wedgeprops={'edgecolor': 'black', 'linewidth': 1, 'linestyle': 'solid'},
         pctdistance=0.85
     )
-    centre_circle = plt.Circle((0, 0), 0.60, color='white', fc='white', linewidth=1, edgecolor='black')
+    centre_circle = plt.Circle((0, 0), 0.60, color='white', fc='black', linewidth=1)
     ax.add_artist(centre_circle)
     for w in wedges:
         w.set_edgecolor('black')
