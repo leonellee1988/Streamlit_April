@@ -15,4 +15,7 @@ def main():
     st.info('Esto es una información')
     st.error('Error')
 
+    st.text('Esto es un texto normal')
+    st.text('### Pero también le puedo aplicar markdown')
+
 main()
