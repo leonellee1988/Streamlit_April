@@ -55,6 +55,20 @@ def create_pie_chart(data):
     )
     st.pyplot(fig)
 
+def create_stacked_area_chart(df):
+    # Agrupar las finales por la resolución (normal-time, extra-time, penalty) y contar las ocurrencias
+    resolved_data = df[['normal-time', 'extra-time', 'penalty']].sum()
+    # Crear gráfico de área apilada
+    fig, ax = plt.subplots(figsize=(10, 6))
+    # Crear gráfico de área apilada (con porcentaje)
+    resolved_data.plot(kind='area', ax=ax, stacked=True, color=['#6fa3ef', '#fcae41', '#28a745'], alpha=0.6)
+    ax.set_title('Distribución de Finales por Tipo de Resolución', fontsize=16, fontweight='bold')
+    ax.set_xlabel('Tipo de Resolución', fontsize=12)
+    ax.set_ylabel('Cantidad de Finales', fontsize=12)
+    ax.set_xticklabels(['Normal Time', 'Extra Time', 'Penalty'], rotation=45, ha='right')
+    # Mostrar el gráfico en Streamlit
+    st.pyplot(fig)
+
 # Función principal Streamlit:
 def main():
 
@@ -78,5 +92,8 @@ def main():
     top_countries = df['winner-country'].value_counts().head(5)
     st.subheader('Top 5: UEFA Champions League champion countries')
     create_pie_chart(top_countries)
+
+    # Distribución de finales por medio de resolución (tiempo regular, tiempo extra o penales):
+    create_stacked_area_chart(df)
 
 main()
