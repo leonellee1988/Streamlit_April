@@ -81,43 +81,28 @@ def create_pie_chart(data):
     st.pyplot(fig)
 
 def create_ring_chart(df):
-    # Sumar los valores de cada categoría
     resolved_data = df[['normal-time', 'extra-time', 'penalty']].sum()
-
-    # Calcular el total y los porcentajes
     total = resolved_data.sum()
     percentages = (resolved_data / total) * 100
-
-    # Crear etiquetas personalizadas
     labels = [f'{category}\n{count} ({pct:.1f}%)' for category, count, pct in zip(
         ['Regular Time', 'Extra Time', 'Penalties'],
         resolved_data,
         percentages
     )]
-
-    # Crear la figura y los ejes
     fig, ax = plt.subplots(figsize=(10, 6))
     colors = sns.color_palette("viridis", len(resolved_data))
-
-    # Crear el gráfico de dona
     wedges, texts = ax.pie(
         resolved_data,
-        labels=labels,  # Usar las etiquetas personalizadas
+        labels=labels,  
         startangle=90,
         colors=colors,
         wedgeprops={'edgecolor': 'black', 'linewidth': 1, 'linestyle': 'solid'},
         pctdistance=0.85
     )
-
-    # Crear el círculo central de la dona
     centre_circle = plt.Circle((0, 0), 0.60, color='black', fc='white', linewidth=1)
     ax.add_artist(centre_circle)
-
-    # Establecer bordes negros en los segmentos
     for w in wedges:
         w.set_edgecolor('black')
-
-    # Mostrar el gráfico
     st.pyplot(fig)
 
 # Función principal Streamlit:
@@ -129,7 +114,7 @@ def main():
     # Encabezado de la App:
     st.title('UEFA Champions League')
     st.header('Final statistics in the UEFA Champions League')
-    st.subheader('Summary table: from 1955 to 2023 season')
+    st.subheader('Summary table: Finals from 1955 to 2023 season')
 
     # Mostrar el dataframe en Streamlit:
     st.dataframe(df_1)
