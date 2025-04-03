@@ -108,7 +108,7 @@ def create_ring_chart(df):
 def create_vertical_bar_chart(data, xlabel, ylabel):
     fig, ax = plt.subplots(figsize=(10, 6))
     colors = sns.color_palette("viridis", len(data))
-    data.plot(kind='bar', ax=ax, color=colors, edgecolor='black')
+    data.plot(kind='barh', ax=ax, color=colors, edgecolor='black')
     ax.set_xlabel(xlabel, fontsize=12)
     ax.set_ylabel(ylabel, fontsize=12)
     ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
