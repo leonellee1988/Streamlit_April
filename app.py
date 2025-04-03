@@ -10,7 +10,7 @@ df = pd.read_excel('final_champions_league.xlsx')
 def main():
 
     # Logo UEFA Champions League:
-    st.image('uefa-champions-league.jpg', width=150)
+    st.image('uefa-champions-league.jpg', width=250)
 
     # Encabezado de la App:
     st.title('UEFA Champions League')
@@ -18,7 +18,7 @@ def main():
     st.subheader('Temporadas: de 1955 a 2023')
 
     # Mostrar el dataframe en Streamlit:
-    st.dataframe(df)
+    st.dataframe(df, width=1200)
     
     # Conteo de triunfos en finales por equipo o club:
     top_teams = df['winner'].value_counts().head(10)
