@@ -58,8 +58,8 @@ def main():
         colors=colors, 
         startangle=90, 
         wedgeprops={'edgecolor': 'black'},  # Añadir bordes para mejor visualización
-        pctdistance=2,  # Distancia del porcentaje (se reduce para mejor estética)
-        labeldistance=2  # Aleja las etiquetas del centro del gráfico
+        pctdistance=0.85,  # Distancia del porcentaje (se reduce para mejor estética)
+        labeldistance=1.1  # Aleja las etiquetas del centro del gráfico
     )
     # Título del gráfico
     ax.set_title('Países Campeones UEFA Champions League', fontsize=16, fontweight='bold')
