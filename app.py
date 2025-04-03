@@ -37,15 +37,15 @@ def main():
     st.pyplot(fig)
 
     # Conteo de triunfos en finales por país:
-    top_countries = df['winner-country'].value_counts().head(10)
+    top_countries = df['winner-country'].value_counts().head(5)
 
     # Gráfica "Países Campeones UEFA Champions League":
-    # Elegir estilo y paleta de colores Seaborn
+    # Elegir estilo y paleta de colores Seaborn:
     sns.set(style="whitegrid")
     colors = sns.color_palette("viridis", len(top_countries))
-    # Crear gráfico de pastel
+    # Crear gráfico de pastel:
     fig, ax = plt.subplots(figsize=(10, 6))
-    # Generar las etiquetas personalizadas con el país, porcentaje y cantidad de copas
+    # Generar las etiquetas personalizadas con el país, porcentaje y cantidad de copas:
     labels = [f'{country} {pct:.1f}% ({count})' for country, pct, count in zip(
         top_countries.index, 
         top_countries.values / top_countries.sum() * 100, 
@@ -58,8 +58,8 @@ def main():
         colors=colors, 
         startangle=90, 
         wedgeprops={'edgecolor': 'black'},  # Añadir bordes para mejor visualización
-        pctdistance=0.85,  # Distancia del porcentaje (se reduce para mejor estética)
-        labeldistance=1.1  # Aleja las etiquetas del centro del gráfico
+        pctdistance=2,  # Distancia del porcentaje (se reduce para mejor estética)
+        labeldistance=2  # Aleja las etiquetas del centro del gráfico
     )
     # Título del gráfico
     ax.set_title('Países Campeones UEFA Champions League', fontsize=16, fontweight='bold')
