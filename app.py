@@ -57,27 +57,21 @@ def create_pie_chart(data):
 
 def create_ring_chart(df):
     resolved_data = df[['normal-time', 'extra-time', 'penalty']].sum()
-    # Crear la figura y el eje
     fig, ax = plt.subplots(figsize=(10, 6))
-    # Colores para las diferentes categorías
     colors = sns.color_palette("viridis", len(resolved_data))
-    # Crear el gráfico de pie con un agujero en el centro
     wedges, texts, autotexts = ax.pie(
         resolved_data,
-        labels=resolved_data.index,
+        labels=['Regular Time', 'Extra Time', 'Penalties'],
         autopct='%1.1f%%',
         startangle=90,
         colors=colors,
         wedgeprops={'edgecolor': 'black', 'linewidth': 1, 'linestyle': 'solid'},
-        pctdistance=0.85  # Esto hace que el texto quede más cerca del borde
+        pctdistance=0.85
     )
-    # Añadir un círculo blanco en el centro para crear el "agujero"
-    centre_circle = plt.Circle((0, 0), 0.70, color='white', fc='white', linewidth=1)
+    centre_circle = plt.Circle((0, 0), 0.80, color='white', fc='white', linewidth=1)
     ax.add_artist(centre_circle)
-    # Añadir bordes a las secciones
     for w in wedges:
         w.set_edgecolor('white')
-    # Mostrar el gráfico en Streamlit
     st.pyplot(fig)
 
 # Función principal Streamlit:
