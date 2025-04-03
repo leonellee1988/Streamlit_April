@@ -106,12 +106,13 @@ def create_ring_chart(df):
     st.pyplot(fig)
 
 def create_vertical_bar_chart(data, xlabel, ylabel):
+    data = data.sort_values(ascending=True)
     fig, ax = plt.subplots(figsize=(10, 6))
     colors = sns.color_palette("viridis", len(data))
     data.plot(kind='barh', ax=ax, color=colors, edgecolor='black')
     ax.set_xlabel(xlabel, fontsize=12)
     ax.set_ylabel(ylabel, fontsize=12)
-    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=0, ha='right')
     st.pyplot(fig)
 
 # Función principal Streamlit:
