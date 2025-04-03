@@ -9,7 +9,7 @@ df = pd.read_excel('final_champions_league.xlsx')
 
 # Crear un Dataframe con columnas modificadas:
 df_1 = df.copy()
-df_1.columns = {
+df_1 = df_1.rename(columns = {
     'season':'Season',
     'winner-country':'Winner Country',
     'winner':'Winner',
@@ -24,7 +24,7 @@ df_1.columns = {
     'normal-time':'Regular Time',
     'extra-time':'Extra Time',
     'penalty':'Penaties'
-}
+})
 
 # Función para crear gráficos:
 def create_bar_chart(data, xlabel, ylabel):
