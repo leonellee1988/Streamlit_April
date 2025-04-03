@@ -20,20 +20,36 @@ def main():
     # Conteo de triunfos en finales por equipo o club:
     top_teams = df['winner'].value_counts().head(10)
 
-    # Gráfica s/Top 10 equipos más ganadores en Champions:
+    # Gráfica "Clubes Campeones UEFA Champions League":
     # Elegir estilo y paleta de colores Seaborn:
     sns.set(style="whitegrid")                                                      
     colors = sns.color_palette("viridis", len(top_teams))                           
     fig, ax = plt.subplots(figsize=(10, 6))                                         
     # Crear gráfico de barras:
     top_teams.plot(kind='bar', ax=ax, color=colors)
-    ax.set_title('Top 10: Campeones de UEFA Champions League', fontsize=16, fontweight='bold')
+    ax.set_title('Clubes Campeones UEFA Champions League', fontsize=16, fontweight='bold')
     # Configuración de titulos y etiquetas:
     ax.set_xlabel('Equipo', fontsize=12)
     ax.set_ylabel('Copas', fontsize=12)
     # Rotación de las etiquetas del eje X:
     ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
     # Mostrar el gráfico en Streamlit:
+    st.pyplot(fig)
+
+    # Conteo de triunfos en finales por país:
+    top_countries = df['winner-country'].value_counts().head(10)
+
+    # Gráfica "Países Campeones UEFA Champions League":
+    # Elegir estilo y paleta de colores Seaborn:
+    sns.set(style="whitegrid")                                                      
+    colors = sns.color_palette("viridis", len(top_countries))                           
+    fig, ax = plt.subplots(figsize=(10, 6))                                         
+    # Crear gráfico de pastel
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.pie(top_countries, labels=top_countries.index, autopct='%1.1f%%', colors=colors, startangle=90, wedgeprops={'edgecolor': 'black'})
+    # Título del gráfico
+    ax.set_title('Países Campeones UEFA Champions League', fontsize=16, fontweight='bold')
+    # Mostrar el gráfico en Streamlit
     st.pyplot(fig)
 
 main()
