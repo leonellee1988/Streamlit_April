@@ -9,6 +9,9 @@ df = pd.read_excel('final_champions_league.xlsx')
 
 def main():
 
+    # Logo UEFA Champions League:
+    st.image('uefa-champions-league.png')
+
     # Encabezado de la App:
     st.title('UEFA Champions League')
     st.header('Histórico de finales Champions League')
