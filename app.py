@@ -32,24 +32,23 @@ def create_statistics_table(df):
     stats = {
         'Metric': ['Total', 'Average', 'Min', 'Max', 'Var', 'Std'],
         'Goals': [
-            df['total-score'].sum(),
-            df['total-score'].mean(),   
-            df['total-score'].min(),    
-            df['total-score'].max(),
-            df['total-score'].var(),    
-            df['total-score'].std()    
+            round(df['total-score'].sum(),2),
+            round(df['total-score'].mean(),2),   
+            round(df['total-score'].min(),2),    
+            round(df['total-score'].max(),2),
+            round(df['total-score'].var(),2),    
+            round(df['total-score'].std(),2)    
         ],
         'Attendance': [
-            df['attendance'].sum(),
-            df['attendance'].mean(),    
-            df['attendance'].min(),     
-            df['attendance'].max(),
-            df['attendance'].var(),     
-            df['attendance'].std()
+            round(df['attendance'].sum(),2),
+            round(df['attendance'].mean(),2),    
+            round(df['attendance'].min(),2),     
+            round(df['attendance'].max(),2),
+            round(df['attendance'].var(),2),     
+            round(df['attendance'].std(),2)
         ]
     }
     stats_df = pd.DataFrame(stats)
-    st.subheader('Estadísticas de Finales')
     st.dataframe(stats_df)
 
 # Función para crear gráficos:
