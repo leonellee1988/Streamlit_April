@@ -30,17 +30,21 @@ df_1 = df_1.rename(columns = {
 def create_statistics_table(df):
     df['total-score'] = df['score-winner'] + df['score-runner-up']
     stats = {
-        'Metric': ['Average', 'Min', 'Max', 'Std'],
-        'Total Goals': [
+        'Metric': ['Total', 'Average', 'Min', 'Max', 'Var', 'Std'],
+        'Goals': [
+            df['total-score'].sum(),
             df['total-score'].mean(),   
             df['total-score'].min(),    
-            df['total-score'].max(),    
+            df['total-score'].max(),
+            df['total-score'].var(),    
             df['total-score'].std()    
         ],
         'Attendance': [
+            df['attendance'].sum(),
             df['attendance'].mean(),    
             df['attendance'].min(),     
-            df['attendance'].max(),     
+            df['attendance'].max(),
+            df['attendance'].var(),     
             df['attendance'].std()
         ]
     }
