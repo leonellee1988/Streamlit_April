@@ -55,17 +55,26 @@ def create_pie_chart(data):
     )
     st.pyplot(fig)
 
-def create_stacked_area_chart(df):
+def create_ring_chart(df):
     # Agrupar las finales por la resolución (normal-time, extra-time, penalty) y contar las ocurrencias
     resolved_data = df[['normal-time', 'extra-time', 'penalty']].sum()
-    # Crear gráfico de área apilada
+    # Crear gráfico de anillo
     fig, ax = plt.subplots(figsize=(10, 6))
-    # Crear gráfico de área apilada (con porcentaje)
-    resolved_data.plot(kind='area', ax=ax, stacked=True, color=['#6fa3ef', '#fcae41', '#28a745'], alpha=0.6)
-    ax.set_xlabel('Tipo de Resolución', fontsize=12)
-    ax.set_ylabel('Cantidad de Finales', fontsize=12)
-    ax.set_xticks([0, 1, 2])  # Ubicaciones de los 3 grupos (normal-time, extra-time, penalty)
-    ax.set_xticklabels(['Normal Time', 'Extra Time', 'Penalty'], rotation=45, ha='right')
+    # Crear el gráfico de anillo (pie chart con un agujero en el centro)
+    wedges, texts, autotexts = ax.pie(
+        resolved_data,
+        labels=resolved_data.index,
+        autopct='%1.1f%%',  # Porcentaje
+        startangle=90,  # Comienza el gráfico desde el ángulo de 90 grados
+        colors=['#6fa3ef', '#fcae41', '#28a745'],  # Colores personalizados
+        wedgeprops={'edgecolor': 'black', 'linewidth': 1, 'linestyle': 'solid'},  # Bordes
+        pctdistance=0.85  # Distancia del texto del porcentaje (hace el agujero más grande)
+    )
+    # Añadir el agujero en el centro para hacer el gráfico de anillo
+    for w in wedges:
+        w.set_edgecolor('white')  # Color blanco en los bordes
+    # Título
+    ax.set_title('Distribución de Finales por Tipo de Resolución', fontsize=16, fontweight='bold')
     # Mostrar el gráfico en Streamlit
     st.pyplot(fig)
 
@@ -94,6 +103,7 @@ def main():
     create_pie_chart(top_countries)
 
     # Distribución de finales por medio de resolución (tiempo regular, tiempo extra o penales):
-    create_stacked_area_chart(df)
+    st.subheader('Distribution of finals by type of resolution')
+    create_ring_chart(df)
 
 main()
