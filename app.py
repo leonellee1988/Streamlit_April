@@ -105,6 +105,15 @@ def create_ring_chart(df):
         w.set_edgecolor('black')
     st.pyplot(fig)
 
+def create_vertical_bar_chart(data, xlabel, ylabel):
+    fig, ax = plt.subplots(figsize=(10, 6))
+    colors = sns.color_palette("viridis", len(data))
+    data.plot(kind='bar', ax=ax, color=colors, edgecolor='black')
+    ax.set_xlabel(xlabel, fontsize=12)
+    ax.set_ylabel(ylabel, fontsize=12)
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
+    st.pyplot(fig)
+
 # Función principal Streamlit:
 def main():
 
@@ -119,7 +128,7 @@ def main():
     # Mostrar el dataframe en Streamlit:
     st.dataframe(df_1)
 
-    #Mostrar el dataframe de estadísticas básicas en Streamlit:
+    # Mostrar el dataframe de estadísticas básicas en Streamlit:
     st.subheader('Basic descriptive statistics')
     create_statistics_table(df)
 
@@ -136,5 +145,10 @@ def main():
     # Distribución de finales por medio de resolución (tiempo regular, tiempo extra o penales):
     st.subheader('Distribution of finals by type of resolution')
     create_ring_chart(df)
+
+    # Finales celebrados por estadio:
+    top_stadium = df['stadium'].value_counts().head(10)
+    st.subheader('Top 10: Stadiums that hosted UEFA Champions League finals')
+    create_vertical_bar_chart(top_stadium, 'Cups', 'Stadium')
 
 main()
