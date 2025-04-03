@@ -7,6 +7,25 @@ import seaborn as sns
 # Cargar la información del Dataframe:
 df = pd.read_excel('final_champions_league.xlsx')
 
+# Crear un Dataframe con columnas modificadas:
+df_1 = df.copy()
+df_1.columns = {
+    'season':'Season',
+    'winner-country':'Winner Country',
+    'winner':'Winner',
+    'score-winner':'Score Winner',
+    'score-runner-up':'Score Runner Up',
+    'runner-up':'Runner Up',
+    'runner-up-country':'Runner Up Country',
+    'stadium':'Stadium',
+    'final-city':'Final City',
+    'final-country':'Final Country',
+    'attendance':'Attendance',
+    'normal-time':'Regular Time',
+    'extra-time':'Extra Time',
+    'penalty':'Penaties'
+}
+
 # Función para crear gráficos:
 def create_bar_chart(data, xlabel, ylabel):
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -44,20 +63,20 @@ def main():
 
     # Encabezado de la App:
     st.title('UEFA Champions League')
-    st.header('Estadísticas finales Champions League')
-    st.subheader('Tabla de resumen: temporada 1955 a 2023')
+    st.header('Final statistics in the UEFA Champions League')
+    st.subheader('Summary table: from 1955 to 2023 season')
 
     # Mostrar el dataframe en Streamlit:
-    st.dataframe(df)
+    st.dataframe(df_1)
 
     # Conteo de triunfos en finales por equipo o club:
     top_teams = df['winner'].value_counts().head(10)
-    st.subheader('Top 10: clubes campeones UEFA Champions League')
-    create_bar_chart(top_teams, 'Club', 'Copas')
+    st.subheader('Top 10: UEFA Champions League champion clubs')
+    create_bar_chart(top_teams, 'Club', 'Cups')
 
     # Conteo de triunfos en finales por país:
     top_countries = df['winner-country'].value_counts().head(5)
-    st.subheader('Top 5: países campeones UEFA Champions League')
+    st.subheader('Top 5: UEFA Champions League champion countries')
     create_pie_chart(top_countries)
 
 main()
