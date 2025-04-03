@@ -62,9 +62,9 @@ def create_stacked_area_chart(df):
     fig, ax = plt.subplots(figsize=(10, 6))
     # Crear gráfico de área apilada (con porcentaje)
     resolved_data.plot(kind='area', ax=ax, stacked=True, color=['#6fa3ef', '#fcae41', '#28a745'], alpha=0.6)
-    ax.set_title('Distribución de Finales por Tipo de Resolución', fontsize=16, fontweight='bold')
     ax.set_xlabel('Tipo de Resolución', fontsize=12)
     ax.set_ylabel('Cantidad de Finales', fontsize=12)
+    ax.set_xticks([0, 1, 2])  # Ubicaciones de los 3 grupos (normal-time, extra-time, penalty)
     ax.set_xticklabels(['Normal Time', 'Extra Time', 'Penalty'], rotation=45, ha='right')
     # Mostrar el gráfico en Streamlit
     st.pyplot(fig)
