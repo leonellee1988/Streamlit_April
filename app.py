@@ -26,6 +26,28 @@ df_1 = df_1.rename(columns = {
     'penalty':'Penaties'
 })
 
+# Función para calcular las estadísticas
+def create_statistics_table(df):
+    df['total-score'] = df['score-winner'] + df['score-runner-up']
+    stats = {
+        'Metric': ['Average', 'Min', 'Max', 'Std'],
+        'Total Goals': [
+            df['total-score'].mean(),   
+            df['total-score'].min(),    
+            df['total-score'].max(),    
+            df['total-score'].std()    
+        ],
+        'Attendance': [
+            df['attendance'].mean(),    
+            df['attendance'].min(),     
+            df['attendance'].max(),     
+            df['attendance'].std()
+        ]
+    }
+    stats_df = pd.DataFrame(stats)
+    st.subheader('Estadísticas de Finales')
+    st.dataframe(stats_df)
+
 # Función para crear gráficos:
 def create_bar_chart(data, xlabel, ylabel):
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -68,7 +90,7 @@ def create_ring_chart(df):
         wedgeprops={'edgecolor': 'black', 'linewidth': 1, 'linestyle': 'solid'},
         pctdistance=0.85
     )
-    centre_circle = plt.Circle((0, 0), 0.80, color='white', fc='white', linewidth=1)
+    centre_circle = plt.Circle((0, 0), 0.60, color='white', fc='white', linewidth=1)
     ax.add_artist(centre_circle)
     for w in wedges:
         w.set_edgecolor('white')
@@ -87,6 +109,10 @@ def main():
 
     # Mostrar el dataframe en Streamlit:
     st.dataframe(df_1)
+
+    #Mostrar el dataframe de estadísticas básicas en Streamlit:
+    st.subheader('Basic descriptive statistics')
+    create_statistics_table(df)
 
     # Conteo de triunfos en finales por equipo o club:
     top_teams = df['winner'].value_counts().head(10)
