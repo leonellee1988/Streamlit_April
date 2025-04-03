@@ -96,7 +96,7 @@ def create_ring_chart(df):
     centre_circle = plt.Circle((0, 0), 0.60, color='white', fc='white', linewidth=1)
     ax.add_artist(centre_circle)
     for w in wedges:
-        w.set_edgecolor('white')
+        w.set_edgecolor('black')
     st.pyplot(fig)
 
 # Función principal Streamlit:
