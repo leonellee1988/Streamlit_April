@@ -10,7 +10,7 @@ df = pd.read_excel('final_champions_league.xlsx')
 def main():
 
     # Logo UEFA Champions League:
-    st.image('C:\\Users\\Usuario\\Desktop\\ciencia_de_datos\\streamlit\\champions_league.svg', width=250)
+    st.image(r'C:\Users\Usuario\Desktop\ciencia_de_datos\streamlit\champions_league.svg', width=250)
 
     # Encabezado de la App:
     st.title('UEFA Champions League')
