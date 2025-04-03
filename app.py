@@ -82,12 +82,18 @@ def create_pie_chart(data):
 
 def create_ring_chart(df):
     resolved_data = df[['normal-time', 'extra-time', 'penalty']].sum()
+    total = resolved_data.sum()
+    percentages = (resolved_data / total) * 100
+    labels = [f'{category}\n{count} ({pct:.1f}%)' for category, count, pct in zip(
+        ['Regular Time', 'Extra Time', 'Penalties'],
+        resolved_data,
+        percentages
+    )]
     fig, ax = plt.subplots(figsize=(10, 6))
     colors = sns.color_palette("viridis", len(resolved_data))
     wedges, texts, autotexts = ax.pie(
         resolved_data,
-        labels=['Regular Time', 'Extra Time', 'Penalties'],
-        autopct='%1.1f%%',
+        labels=labels,
         startangle=90,
         colors=colors,
         wedgeprops={'edgecolor': 'black', 'linewidth': 1, 'linestyle': 'solid'},
