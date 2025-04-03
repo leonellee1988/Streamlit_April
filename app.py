@@ -56,26 +56,20 @@ def create_pie_chart(data):
     st.pyplot(fig)
 
 def create_ring_chart(df):
-    # Agrupar las finales por la resolución (normal-time, extra-time, penalty) y contar las ocurrencias
     resolved_data = df[['normal-time', 'extra-time', 'penalty']].sum()
-    # Crear gráfico de anillo
     fig, ax = plt.subplots(figsize=(10, 6))
-    # Crear el gráfico de anillo (pie chart con un agujero en el centro)
+    colors = sns.color_palette("viridis", len(resolved_data))
     wedges, texts, autotexts = ax.pie(
         resolved_data,
         labels=resolved_data.index,
-        autopct='%1.1f%%',  # Porcentaje
-        startangle=90,  # Comienza el gráfico desde el ángulo de 90 grados
-        colors=['#6fa3ef', '#fcae41', '#28a745'],  # Colores personalizados
-        wedgeprops={'edgecolor': 'black', 'linewidth': 1, 'linestyle': 'solid'},  # Bordes
-        pctdistance=0.85  # Distancia del texto del porcentaje (hace el agujero más grande)
-    )
+        autopct='%1.1f%%', 
+        startangle=90,  
+        colors=colors, 
+        wedgeprops={'edgecolor': 'black', 'linewidth': 1, 'linestyle': 'solid'},  
+        pctdistance=0.85  )
     # Añadir el agujero en el centro para hacer el gráfico de anillo
     for w in wedges:
-        w.set_edgecolor('white')  # Color blanco en los bordes
-    # Título
-    ax.set_title('Distribución de Finales por Tipo de Resolución', fontsize=16, fontweight='bold')
-    # Mostrar el gráfico en Streamlit
+        w.set_edgecolor('white')
     st.pyplot(fig)
 
 # Función principal Streamlit:
