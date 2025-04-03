@@ -18,7 +18,7 @@ def main():
     st.subheader('Temporadas: de 1955 a 2023')
 
     # Mostrar el dataframe en Streamlit:
-    st.dataframe(df, height=1200)
+    st.dataframe(df)
     
     # Conteo de triunfos en finales por equipo o club:
     top_teams = df['winner'].value_counts().head(10)
