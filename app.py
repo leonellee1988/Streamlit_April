@@ -10,7 +10,7 @@ st.set_page_config(page_title='Data Science Project 01', page_icon='lee_logo.png
 # Cargar la información del DataFrame:
 df = pd.read_excel('final_champions_league.xlsx')
 
-# Crear un DataFrame con columnas renombradas:
+# Renombrar columnas:
 df_1 = df.copy().rename(columns={
     'season': 'Season', 'winner-country': 'Winner Country', 'winner': 'Winner',
     'score-winner': 'Score Winner', 'score-runner-up': 'Score Runner Up',
@@ -20,7 +20,7 @@ df_1 = df.copy().rename(columns={
     'extra-time': 'Extra Time', 'penalty': 'Penalties'
 })
 
-# Función auxiliar para estadística descriptiva:
+# Funciones auxiliares:
 def compute_stats(series):
     return [
         round(series.sum(), 2), round(series.mean(), 2),
@@ -28,7 +28,6 @@ def compute_stats(series):
         round(series.var(), 2), round(series.std(), 2)
     ]
 
-# Función para calcular las estadísticas
 def create_statistics_table(df):
     df['total-score'] = df['score-winner'] + df['score-runner-up']
     stats = {
@@ -38,16 +37,14 @@ def create_statistics_table(df):
     }
     st.dataframe(pd.DataFrame(stats))
 
-# Función para gráfica histograma Pearson:
 def create_goals_histogram(df):
     fig, ax = plt.subplots(figsize=(10, 6))
     color = sns.color_palette("viridis")[0]
-    sns.histplot(df['total-score'], bins=10, kde=True, color=color, ax=ax)
+    sns.histplot(df['score-winner'] + df['score-runner-up'], bins=10, kde=True, color=color, ax=ax)
     ax.set_xlabel('Total Goals in Final', fontsize=12)
     ax.set_ylabel('Frequency', fontsize=12)
     st.pyplot(fig)
 
-# Función para gráfica de barras horizontales/verticales
 def create_bar_chart(data, xlabel, ylabel, horizontal=False):
     data = data.sort_values(ascending=horizontal)
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -58,7 +55,6 @@ def create_bar_chart(data, xlabel, ylabel, horizontal=False):
     ax.set_ylabel(ylabel, fontsize=12)
     st.pyplot(fig)
 
-# Gráfico de pastel
 def create_pie_chart(data):
     fig, ax = plt.subplots(figsize=(10, 6))
     colors = sns.color_palette("viridis", len(data))
@@ -69,7 +65,6 @@ def create_pie_chart(data):
            wedgeprops={'edgecolor': 'black'}, pctdistance=0.85, labeldistance=1.1)
     st.pyplot(fig)
 
-# Gráfico tipo dona
 def create_ring_chart(df):
     resolved = df[['normal-time', 'extra-time', 'penalty']].sum()
     labels = ['Regular Time', 'Extra Time', 'Penalties']
@@ -83,46 +78,40 @@ def create_ring_chart(df):
     ax.add_artist(centre_circle)
     st.pyplot(fig)
 
-# Función principal Streamlit:
+# Función principal:
 def main():
-
-    selected_team = st.sidebar.selectbox('Select a team:', df['winner'].unique())
-    filtered_df = df[df['winner'] == selected_team]
-    st.dataframe(filtered_df)
+    # Filtro en el sidebar
+    selected_country = st.sidebar.selectbox('Filter by Winner Country:', sorted(df['winner-country'].dropna().unique()))
+    df_filtrado = df[df['winner-country'] == selected_country]
 
     st.image(r'C:\Users\Usuario\Desktop\ciencia_de_datos\streamlit\champions-league.svg', width=150)
     st.title('UEFA Champions League')
     st.header('Final statistics in the UEFA Champions League')
-    st.subheader('Summary table: Finals from 1955 to 2023 season')
+    st.subheader(f'Summary table: Finals from 1955 to 2023 season ({selected_country})')
 
-    # Mostrar el dataframe:
-    st.dataframe(df_1)
+    # Mostrar tabla de datos filtrada
+    st.dataframe(df_filtrado)
 
-    # Mostrar tabla con estadística descriptiva:
+    # Estadísticas
     st.subheader('Basic descriptive statistics')
-    create_statistics_table(df)
+    create_statistics_table(df_filtrado)
 
-    # Mostrar distribución de goles in finales:
+    # Histograma
     st.subheader('Distribution of goals in UEFA Champions League finals')
-    create_goals_histogram(df)
+    create_goals_histogram(df_filtrado)
 
-    # Mostrar Top 10 clubes más ganadores:
+    # Top 10 equipos más ganadores (dentro del país seleccionado)
     st.subheader('Top 10: UEFA Champions League champion clubs')
-    top_teams = df['winner'].value_counts().head(10)
+    top_teams = df_filtrado['winner'].value_counts().head(10)
     create_bar_chart(top_teams, 'Club', 'Cups')
 
-    # Mostrar Top 5 países más ganadores:
-    st.subheader('Top 5: UEFA Champions League champion countries')
-    top_countries = df['winner-country'].value_counts().head(5)
-    create_pie_chart(top_countries)
-    
-    # Mostrar distribución de finales por medio de resolución:
+    # Distribución de finales por resolución
     st.subheader('Distribution of finals by type of resolution')
-    create_ring_chart(df)
+    create_ring_chart(df_filtrado)
 
-    # Top 10 estadíos con más finales de Champions:
+    # Estadios más usados en ese país
     st.subheader('Top 10: Stadiums that hosted UEFA Champions League finals')
-    top_stadium = df['stadium'].value_counts().head(10)
-    create_bar_chart(top_stadium, 'Finals', 'Stadium', horizontal=True)
+    top_stadiums = df_filtrado['stadium'].value_counts().head(10)
+    create_bar_chart(top_stadiums, 'Finals', 'Stadium', horizontal=True)
 
 main()
