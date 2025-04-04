@@ -39,7 +39,7 @@ def create_statistics_table(df):
     st.dataframe(pd.DataFrame(stats))
 
 def create_winners_timeline(df):
-    timeline = df['Season'].value_counts().sort_index()
+    timeline = df['season'].value_counts().sort_index()
     fig, ax = plt.subplots(figsize=(12, 6))
     sns.lineplot(x=timeline.index, y=timeline.values, marker='o', ax=ax, color='blue')
     ax.set_xlabel('Season', fontsize=12)
