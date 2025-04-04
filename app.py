@@ -38,9 +38,11 @@ def create_statistics_table(df):
     }
     st.dataframe(pd.DataFrame(stats))
 
+# Función para gráfica histograma Pearson:
 def create_goals_histogram(df):
     fig, ax = plt.subplots(figsize=(10, 6))
-    sns.histplot(df['total-score'], bins=10, kde=True, color='green', ax=ax)
+    color = sns.color_palette("viridis")[0]
+    sns.histplot(df['total-score'], bins=10, kde=True, color=color, ax=ax)
     ax.set_xlabel('Total Goals in Final', fontsize=12)
     ax.set_ylabel('Frequency', fontsize=12)
     ax.set_title('Distribution of Goals in Champions League Finals')
@@ -96,6 +98,8 @@ def main():
     st.subheader('Basic descriptive statistics')
     create_statistics_table(df)
 
+    # Mostrar distribución de goles in finales:
+    st.subheader('Distribution of goals in UEFA Champions League finals')
     create_goals_histogram(df)
 
     # Mostrar Top 10 clubes más ganadores:
