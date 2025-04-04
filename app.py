@@ -89,7 +89,7 @@ def main():
         df_filtrado = df[df['winner-country'] == selected_country]
 
     # Encabezado de la App:
-    st.image(r'C:\Users\Usuario\Desktop\ciencia_de_datos\streamlit\champions-league.svg', width=150)
+    st.image('champions-league.svg', width=150)
     st.title('UEFA Champions League')
     st.header('Final statistics in the UEFA Champions League')
     st.subheader(f'Summary table: Finals from 1955 to 2023 season')
