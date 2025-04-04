@@ -45,7 +45,6 @@ def create_goals_histogram(df):
     sns.histplot(df['total-score'], bins=10, kde=True, color=color, ax=ax)
     ax.set_xlabel('Total Goals in Final', fontsize=12)
     ax.set_ylabel('Frequency', fontsize=12)
-    ax.set_title('Distribution of Goals in Champions League Finals')
     st.pyplot(fig)
 
 # Función para gráfica de barras horizontales/verticales
@@ -86,6 +85,11 @@ def create_ring_chart(df):
 
 # Función principal Streamlit:
 def main():
+
+    selected_team = st.sidebar.selectbox('Select a team:', df['winner'].unique())
+    filtered_df = df[df['winner'] == selected_team]
+    st.dataframe(filtered_df)
+
     st.image(r'C:\Users\Usuario\Desktop\ciencia_de_datos\streamlit\champions-league.svg', width=150)
     st.title('UEFA Champions League')
     st.header('Final statistics in the UEFA Champions League')
