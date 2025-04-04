@@ -110,6 +110,12 @@ def main():
     top_teams = df_filtrado['winner'].value_counts().head(10)
     create_bar_chart(top_teams, 'Club', 'Cups')
 
+    # Top 5 países más ganadores:
+    if selected_country == 'All countries':
+        st.subheader('Top 5: Countries with most Champions League titles')
+        top_countries = df['winner-country'].value_counts().head(5)
+        create_pie_chart(top_countries)
+
     # Distribución de finales por resolución
     st.subheader(f'Distribution of finals by type of resolution')
     create_ring_chart(df_filtrado)
