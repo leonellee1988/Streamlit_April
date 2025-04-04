@@ -1,13 +1,13 @@
-# Carga de paquetes:
+# Cargar paquetes:
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Configuraciones de la App:
+# Configurar generalidades de la App:
 st.set_page_config(page_title='Data Science Project 01', page_icon='lee_logo.png')
 
-# Cargar la información del DataFrame:
+# Cargar la información del dataFrame:
 df = pd.read_excel('final_champions_league.xlsx')
 
 # Renombrar columnas:
@@ -80,37 +80,42 @@ def create_ring_chart(df):
 
 # Función principal:
 def main():
-    # Filtro en el sidebar
-    selected_country = st.sidebar.selectbox('Filter by Winner Country:', sorted(df['winner-country'].dropna().unique()))
-    df_filtrado = df[df['winner-country'] == selected_country]
 
+    # Filtro en el sidebar:
+    selected_country = st.sidebar.selectbox('Filter by Winner Country:', ['All countries'] + sorted(df['winner-country'].dropna().unique().tolist()))
+    if selected_country == 'All countries':
+        df_filtrado = df
+    else:
+        df_filtrado = df[df['winner-country'] == selected_country]
+
+    # Encabezado de la App:
     st.image(r'C:\Users\Usuario\Desktop\ciencia_de_datos\streamlit\champions-league.svg', width=150)
     st.title('UEFA Champions League')
     st.header('Final statistics in the UEFA Champions League')
-    st.subheader(f'Summary table: Finals from 1955 to 2023 season ({selected_country})')
+    st.subheader(f'Summary table: Finals from 1955 to 2023 season')
 
-    # Mostrar tabla de datos filtrada
+    # Dataframe:
     st.dataframe(df_filtrado)
 
     # Estadísticas
-    st.subheader('Basic descriptive statistics')
+    st.subheader(f'Basic descriptive statistics')
     create_statistics_table(df_filtrado)
 
     # Histograma
-    st.subheader('Distribution of goals in UEFA Champions League finals')
+    st.subheader(f'Distribution of goals in UEFA Champions League finals')
     create_goals_histogram(df_filtrado)
 
     # Top 10 equipos más ganadores (dentro del país seleccionado)
-    st.subheader('Top 10: UEFA Champions League champion clubs')
+    st.subheader(f'Top 10: UEFA Champions League champion clubs')
     top_teams = df_filtrado['winner'].value_counts().head(10)
     create_bar_chart(top_teams, 'Club', 'Cups')
 
     # Distribución de finales por resolución
-    st.subheader('Distribution of finals by type of resolution')
+    st.subheader(f'Distribution of finals by type of resolution')
     create_ring_chart(df_filtrado)
 
     # Estadios más usados en ese país
-    st.subheader('Top 10: Stadiums that hosted UEFA Champions League finals')
+    st.subheader(f'Top 10: Stadiums that hosted UEFA Champions League finals')
     top_stadiums = df_filtrado['stadium'].value_counts().head(10)
     create_bar_chart(top_stadiums, 'Finals', 'Stadium', horizontal=True)
 
