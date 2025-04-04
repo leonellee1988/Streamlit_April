@@ -38,6 +38,15 @@ def create_statistics_table(df):
     }
     st.dataframe(pd.DataFrame(stats))
 
+def create_winners_timeline(df):
+    timeline = df['Season'].value_counts().sort_index()
+    fig, ax = plt.subplots(figsize=(12, 6))
+    sns.lineplot(x=timeline.index, y=timeline.values, marker='o', ax=ax, color='blue')
+    ax.set_xlabel('Season', fontsize=12)
+    ax.set_ylabel('Number of Finals', fontsize=12)
+    ax.set_title('Finals Over Time')
+    st.pyplot(fig)
+
 # Función para gráfica de barras horizontales/verticales
 def create_bar_chart(data, xlabel, ylabel, horizontal=False):
     data = data.sort_values(ascending=horizontal)
@@ -87,6 +96,8 @@ def main():
     # Mostrar tabla con estadística descriptiva:
     st.subheader('Basic descriptive statistics')
     create_statistics_table(df)
+
+    create_winners_timeline(df)
 
     # Mostrar Top 10 clubes más ganadores:
     st.subheader('Top 10: UEFA Champions League champion clubs')
