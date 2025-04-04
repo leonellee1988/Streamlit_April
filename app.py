@@ -70,7 +70,7 @@ def create_ring_chart(df):
     colors = sns.color_palette("viridis", len(resolved))
     wedges, _ = ax.pie(resolved, labels=label_text, colors=colors,
                        startangle=90, wedgeprops={'edgecolor': 'black'}, pctdistance=0.85)
-    centre_circle = plt.Circle((0, 0), 0.60, color='white', edgecolor='black', linewidth=1.5)
+    centre_circle = plt.Circle((0, 0), 0.60, facecolor='white', edgecolor='black', linewidth=1.5, zorder=10)
     ax.add_artist(centre_circle)
     st.pyplot(fig)
 
