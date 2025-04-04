@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Configuraciones de la App:
-st.set_page_config(page_title='Ciencia Datos - Champions League', page_icon='lee_logo.png')
+st.set_page_config(page_title='Data Science Project 01', page_icon='lee_logo.png')
 
 # Cargar la información del Dataframe:
 df = pd.read_excel('final_champions_league.xlsx')
