@@ -7,31 +7,46 @@ import seaborn as sns
 # Cargar la información del Dataframe:
 df = pd.read_excel('final_champions_league.xlsx')
 
-# Renombrar columnas directamente del Dataframe:
-df = df.rename(columns={
-    'season': 'Season',
-    'winner-country': 'Winner Country',
-    'winner': 'Winner',
-    'score-winner': 'Score Winner',
-    'score-runner-up': 'Score Runner Up',
-    'runner-up': 'Runner Up',
-    'runner-up-country': 'Runner Up Country',
-    'stadium': 'Stadium',
-    'final-city': 'Final City',
-    'final-country': 'Final Country',
-    'attendance': 'Attendance',
-    'normal-time': 'Regular Time',
-    'extra-time': 'Extra Time',
-    'penalty': 'Penalties'
+# Crear un Dataframe con columnas modificadas:
+df_1 = df.copy()
+df_1 = df_1.rename(columns = {
+    'season':'Season',
+    'winner-country':'Winner Country',
+    'winner':'Winner',
+    'score-winner':'Score Winner',
+    'score-runner-up':'Score Runner Up',
+    'runner-up':'Runner Up',
+    'runner-up-country':'Runner Up Country',
+    'stadium':'Stadium',
+    'final-city':'Final City',
+    'final-country':'Final Country',
+    'attendance':'Attendance',
+    'normal-time':'Regular Time',
+    'extra-time':'Extra Time',
+    'penalty':'Penaties'
 })
 
-# Función para calcular las estadísticas:
+# Función para calcular las estadísticas
 def create_statistics_table(df):
     df['total-score'] = df['score-winner'] + df['score-runner-up']
     stats = {
         'Metric': ['Total', 'Average', 'Min', 'Max', 'Var', 'Std'],
-        'Goals': df['total-score'].agg(['sum', 'mean', 'min', 'max', 'var', 'std']).round(2),
-        'Attendance': df['attendance'].agg(['sum', 'mean', 'min', 'max', 'var', 'std']).round(2)
+        'Goals': [
+            round(df['total-score'].sum(),2),
+            round(df['total-score'].mean(),2),   
+            round(df['total-score'].min(),2),    
+            round(df['total-score'].max(),2),
+            round(df['total-score'].var(),2),    
+            round(df['total-score'].std(),2)    
+        ],
+        'Attendance': [
+            round(df['attendance'].sum(),2),
+            round(df['attendance'].mean(),2),    
+            round(df['attendance'].min(),2),     
+            round(df['attendance'].max(),2),
+            round(df['attendance'].var(),2),     
+            round(df['attendance'].std(),2)
+        ]
     }
     stats_df = pd.DataFrame(stats)
     st.dataframe(stats_df)
@@ -91,7 +106,7 @@ def create_ring_chart(df):
     st.pyplot(fig)
 
 def create_vertical_bar_chart(data, xlabel, ylabel):
-    data = data.sort_values(ascending=False)
+    data = data.sort_values(ascending=True)
     fig, ax = plt.subplots(figsize=(10, 6))
     colors = sns.color_palette("viridis", len(data))
     data.plot(kind='barh', ax=ax, color=colors, edgecolor='black')
@@ -111,10 +126,10 @@ def main():
     st.header('Final statistics in the UEFA Champions League')
     st.subheader('Summary table: Finals from 1955 to 2023 season')
 
-    # Mostrar el dataframe en Streamlit:
-    st.dataframe(df)
+    # Mostrar el dataframe:
+    st.dataframe(df_1)
 
-    # Mostrar el dataframe de estadísticas básicas en Streamlit:
+    # Mostrar el dataframe de estadísticas básicas:
     st.subheader('Basic descriptive statistics')
     create_statistics_table(df)
 
