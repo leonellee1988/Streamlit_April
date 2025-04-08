@@ -125,4 +125,12 @@ def main():
     top_stadiums = df_filtrado['stadium'].value_counts().head(10)
     create_bar_chart(top_stadiums, 'Finals', 'Stadium', horizontal=True)
 
+# Pie de página
+st.markdown("""
+<hr style='border:1px solid #ddd; margin-top: 40px; margin-bottom:10px'>
+<div style='text-align: center; color: grey; font-size: 0.9em'>
+    Developed by Edwin Lee | 📧 leonellee2016@gmail.com | Github: leonellee1988
+</div>
+""", unsafe_allow_html=True)
+
 main()
